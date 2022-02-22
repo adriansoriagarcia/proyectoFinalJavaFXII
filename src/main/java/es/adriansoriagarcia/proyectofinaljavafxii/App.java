@@ -23,8 +23,9 @@ public class App extends Application {
         Tablero tablero= new Tablero();
         
         
-        boolean prueba = tablero.buscarPareja(0,0,1,0);
+        boolean prueba = tablero.buscarPareja(0,0,0,0);
         System.out.println(prueba);
+        
         
         tablero.mostrarTableroConsola();
     }

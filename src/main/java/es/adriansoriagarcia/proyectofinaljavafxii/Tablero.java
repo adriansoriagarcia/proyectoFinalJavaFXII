@@ -23,6 +23,7 @@ public class Tablero {
     int aleatorioColumnas;
     int aleatorioFilas1;
     int aleatorioColumnas1;
+    boolean finPartida = false;
 
     //Método constructor
     public Tablero(){
@@ -72,18 +73,7 @@ public class Tablero {
             }
         }
     }
-    
-    public boolean buscarPareja(int posXcarta1,int posYcarta1, int posXcarta2,  int posYcarta2) {     
-       //retorna true si coninciden las parejas de cartas o false si no coincide
-       if(tablero[posXcarta1][posYcarta1] == tablero[posXcarta2][posYcarta2]){
-            encontrado[posXcarta1][posYcarta1] = SIPAREJA; 
-            encontrado[posXcarta2][posYcarta2] = SIPAREJA;
-           return true;
-           
-       }
-       return false;
-    }   
-    
+   
     
     public void mostrarTableroConsola(){
         for(int y=0; y<tamYTablero; y++){   
@@ -100,5 +90,29 @@ public class Tablero {
             System.out.println();
         }
         System.out.println();
+    }
+    
+    public boolean buscarPareja(int posXcarta1,int posYcarta1, int posXcarta2,  int posYcarta2) {     
+       //retorna true si coninciden las parejas de cartas o false si no coincide
+       if(tablero[posXcarta1][posYcarta1] == tablero[posXcarta2][posYcarta2]){
+            encontrado[posXcarta1][posYcarta1] = SIPAREJA; 
+            encontrado[posXcarta2][posYcarta2] = SIPAREJA;
+           return true;
+           
+       }
+       return false;
+    }  
+    
+    public boolean finPartida() {
+        for(int x=0; x<tamXTablero; x++) {
+            for(int y=0; y<tamYTablero; y++) {
+                if(encontrado[x][y] == SIPAREJA) {
+                    finPartida = true;
+                    return true; 
+                    
+                }
+            }
+        }
+        return false;        
     }
 }
