@@ -24,6 +24,9 @@ public class Tablero {
     int aleatorioFilas1;
     int aleatorioColumnas1;
     boolean finPartida = false;
+    char turnoJugador = JUGADOR1;
+    static final char JUGADOR1 = '1';
+    static final char JUGADOR2 = '2';
 
     //Método constructor
     public Tablero(){
@@ -66,12 +69,39 @@ public class Tablero {
     public Tablero(short tamX, short tamY){
         tamXTablero = tamX;
         tamYTablero = tamY;  
+        int canNumeros= tamXTablero * tamYTablero / 2;
+        System.out.println(canNumeros);
+        int numRepeticiones=2;
         tablero = new int [tamXTablero][tamYTablero];
+        encontrado = new char [tamXTablero][tamYTablero];
+        Random random = new Random();
+        
+        //Bloque para generación de aleatorios array tablero
+        for(int i=1; i<canNumeros; i++){
+            for(int x=0; x<numRepeticiones; x++){
+                aleatorioFilas = random.nextInt(tamXTablero);
+                aleatorioColumnas = random.nextInt(tamYTablero);
+                if(tablero[aleatorioColumnas][aleatorioFilas] == VACIO){
+                    tablero[aleatorioColumnas][aleatorioFilas]= i;
+                } else {
+                    do {
+                        aleatorioColumnas1 = random.nextInt(tamXTablero);
+                        aleatorioFilas1 = random.nextInt(tamYTablero);
+
+                    }
+                    while(tablero[aleatorioColumnas1][aleatorioFilas1] != VACIO );
+                    tablero[aleatorioColumnas1][aleatorioFilas1]=i;
+                }
+            }
+        } 
+        
+        //Bloque para generación array parejas encontradas
         for(int x=0; x<tamXTablero;x++){
             for(int y=0; y<tamYTablero; y++){
-                tablero[x][y] = VACIO; 
+                encontrado[x][y] = NOPAREJA; 
             }
         }
+        
     }
    
     
@@ -103,16 +133,24 @@ public class Tablero {
        return false;
     }  
     
+    public void cambiarTurnoJugador() {
+        if(turnoJugador == JUGADOR1) {
+            turnoJugador = JUGADOR2;
+        } else {
+            turnoJugador = JUGADOR1;
+        }
+    }
+    
     public boolean finPartida() {
         for(int x=0; x<tamXTablero; x++) {
             for(int y=0; y<tamYTablero; y++) {
-                if(encontrado[x][y] == SIPAREJA) {
-                    finPartida = true;
-                    return true; 
+                if(encontrado[x][y] == NOPAREJA) {
+                    return false; 
                     
                 }
             }
         }
-        return false;        
+        finPartida = true;
+        return true;        
     }
 }
