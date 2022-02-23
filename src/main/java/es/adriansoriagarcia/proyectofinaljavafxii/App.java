@@ -25,7 +25,7 @@ public class App extends Application {
         stage.show();
         stage.setTitle("Memoria");
         
-        Tablero tablero= new Tablero();
+        Control tablero= new Control();
         
         
         boolean prueba = tablero.buscarPareja(0,0,1,0);
