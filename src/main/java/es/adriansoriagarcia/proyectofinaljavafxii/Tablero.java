@@ -5,19 +5,21 @@
  */
 package es.adriansoriagarcia.proyectofinaljavafxii;
 
+import javafx.scene.layout.GridPane;
+
 /**
  *
  * @author usuario
  */
 
-//recorre el array de numeros y dependiendo del valor de cada posición coloca una imagen en grindpanel
-public class Tablero {
-
+//Recorre el array de numeros y dependiendo del valor de cada posición coloca una imagen en grindpanel
+public class Tablero extends GridPane {
+    
     public Tablero() {
        for(int x=0; x<Control.tamXTablero;x++){   
         for(int y=0; y<Control.tamYTablero;y++){
-            Control.tablero[x][y]= '0';
-            System.out.println(Control.tablero[x][y]);
+            Carta carta = new Carta((byte)Control.tablero[x][y]);
+            this.add(carta,x,y);
         }
        } 
         

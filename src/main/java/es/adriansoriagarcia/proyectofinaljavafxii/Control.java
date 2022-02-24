@@ -69,7 +69,7 @@ public class Control {
     public Control(short tamX, short tamY){
         tamXTablero = tamX;
         tamYTablero = tamY;  
-        int canNumeros= tamXTablero * tamYTablero / 2;
+        int canNumeros= tamXTablero * tamYTablero / 2 + 1;
         System.out.println(canNumeros);
         int numRepeticiones=2;
         tablero = new int [tamXTablero][tamYTablero];

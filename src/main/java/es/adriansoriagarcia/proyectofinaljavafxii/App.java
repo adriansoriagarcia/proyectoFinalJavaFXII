@@ -17,7 +17,7 @@ public class App extends Application {
         // Panel principal que contendrá los elementos de la pantalla
         GridPane paneRoot;
         short tamXPantalla=640;
-        short tamYPantalla=480;
+        short tamYPantalla=570;
         
         paneRoot = new GridPane();
         var scene = new Scene(paneRoot, tamXPantalla, tamYPantalla);
@@ -25,19 +25,19 @@ public class App extends Application {
         stage.show();
         stage.setTitle("Memoria");
         
-        Control tablero= new Control();
+        Control control= new Control();
         
-        
-        boolean prueba = tablero.buscarPareja(0,0,1,0);
+        boolean prueba = control.buscarPareja(0,0,1,0);
         System.out.println(prueba);
         
-        boolean fin = tablero.finPartida();
+        boolean fin = control.finPartida();
         System.out.println("fin partida " +fin);
         
-        tablero.mostrarTableroConsola();
+        control.mostrarTableroConsola();
         
-        Carta carta = new Carta((byte)7);
-        paneRoot.getChildren().add(carta);
+        Tablero tablero = new Tablero();
+        paneRoot.getChildren().add(tablero);
+        
         
         
     }
