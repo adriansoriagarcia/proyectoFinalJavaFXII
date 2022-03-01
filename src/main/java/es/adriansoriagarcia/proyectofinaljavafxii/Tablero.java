@@ -5,6 +5,7 @@
  */
 package es.adriansoriagarcia.proyectofinaljavafxii;
 
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -20,9 +21,12 @@ public class Tablero extends GridPane {
         for(int y=0; y<Control.tamYTablero;y++){
             Carta carta = new Carta((byte)Control.tablero[x][y]);
             this.add(carta,x,y);
+
         }
        } 
-        
-    }
+    } 
     
+ 
 }
+
+

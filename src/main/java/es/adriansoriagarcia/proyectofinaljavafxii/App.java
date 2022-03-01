@@ -25,6 +25,8 @@ public class App extends Application {
         stage.show();
         stage.setTitle("Memoria");
         
+        //TAMAÑOS TABLERO(4X4|6X6)
+        //(short)6,(short)6
         Control control= new Control();
         
         boolean prueba = control.buscarPareja(0,0,1,0);
