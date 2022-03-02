@@ -5,17 +5,12 @@
  */
 package es.adriansoriagarcia.proyectofinaljavafxii;
 
-<<<<<<< HEAD
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
-=======
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
->>>>>>> 79619659374fe550171a58ec7e6f086386a97299
 
 /**
  *
@@ -25,7 +20,6 @@ import javafx.scene.layout.GridPane;
 //Recorre el array de numeros y dependiendo del valor de cada posición coloca una imagen en grindpanel
 public class Tablero extends GridPane {
     
-<<<<<<< HEAD
     public boolean play = false;
     int c=0;
     int columna;
@@ -36,9 +30,6 @@ public class Tablero extends GridPane {
     Timeline timelineImagen;
     
     public Tablero(Control control) {
-=======
-    public Tablero() {
->>>>>>> 79619659374fe550171a58ec7e6f086386a97299
        for(int x=0; x<Control.tamXTablero;x++){   
         for(int y=0; y<Control.tamYTablero;y++){
             Carta carta = new Carta((byte)Control.tablero[x][y]);
@@ -46,7 +37,6 @@ public class Tablero extends GridPane {
 
         }
        } 
-<<<<<<< HEAD
        this.setOnMouseClicked((event) -> {
             c++;
             if(c==1) {
@@ -87,10 +77,6 @@ public class Tablero extends GridPane {
         );
     }
     
-=======
-    } 
-    
->>>>>>> 79619659374fe550171a58ec7e6f086386a97299
  
 }
 

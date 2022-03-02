@@ -124,7 +124,6 @@ public class Control {
     
     public boolean buscarPareja(int posXcarta1,int posYcarta1, int posXcarta2,  int posYcarta2) {     
        //retorna true si coninciden las parejas de cartas o false si no coincide
-<<<<<<< HEAD
         System.out.println("Xcarta1 " + posXcarta1);
         System.out.println("Ycarta1 " + posYcarta1);
         System.out.println("Xcarta2 " + posXcarta2);
@@ -132,8 +131,6 @@ public class Control {
         System.out.println("carta1 " + tablero[posXcarta1][posYcarta1]);
         System.out.println("carta 2 " + tablero[posXcarta2][posYcarta2]);
         mostrarTableroConsola();
-=======
->>>>>>> 79619659374fe550171a58ec7e6f086386a97299
        if(tablero[posXcarta1][posYcarta1] == tablero[posXcarta2][posYcarta2]){
             encontrado[posXcarta1][posYcarta1] = SIPAREJA; 
             encontrado[posXcarta2][posYcarta2] = SIPAREJA;
