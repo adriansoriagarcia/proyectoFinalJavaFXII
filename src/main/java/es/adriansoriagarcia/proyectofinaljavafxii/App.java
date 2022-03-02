@@ -25,17 +25,20 @@ public class App extends Application {
         stage.show();
         stage.setTitle("Memoria");
         
+        //TAMAÑOS TABLERO(4X4|6X6)
+        //(short)6,(short)6
         Control control= new Control();
         
-        boolean prueba = control.buscarPareja(0,0,1,0);
-        System.out.println(prueba);
+        //boolean prueba = control.buscarPareja(Tablero.columna,Tablero.fila,Tablero.columna1,Tablero.fila1);
+        //System.out.println(prueba);
         
-        boolean fin = control.finPartida();
-        System.out.println("fin partida " +fin);
+        //boolean fin = control.finPartida();
+        //System.out.println("fin partida " +fin);
         
-        control.mostrarTableroConsola();
+        //control.mostrarTableroConsola();
         
-        Tablero tablero = new Tablero();
+        
+        Tablero tablero = new Tablero(control);
         paneRoot.getChildren().add(tablero);
         
         
