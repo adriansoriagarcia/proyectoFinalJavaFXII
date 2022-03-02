@@ -5,12 +5,10 @@
  */
 package es.adriansoriagarcia.proyectofinaljavafxii;
 
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
-import javafx.util.Duration;
+
 
 /**
  *
@@ -27,17 +25,36 @@ public class Tablero extends GridPane {
     int columna1;
     int fila1;
     Control control;
+    Carta carta;
     Timeline timelineImagen;
+    private boolean congelado=false;
     
-    public Tablero(Control control) {
-       for(int x=0; x<Control.tamXTablero;x++){   
+    
+    public Tablero(Control control) { 
+       setImage();
+       mouseEvent(control);
+       ocultarImagenes();
+       
+    } 
+    /*
+     * Asigna la imágen que contendra cada casilla
+    */
+    public void setImage(){
+        for(int x=0; x<Control.tamXTablero;x++){   
         for(int y=0; y<Control.tamYTablero;y++){
-            Carta carta = new Carta((byte)Control.tablero[x][y]);
+            carta = new Carta((byte)Control.tablero[x][y]);
             this.add(carta,x,y);
 
         }
-       } 
-       this.setOnMouseClicked((event) -> {
+       }  
+    }
+    
+    /**
+    * Asigna la posición de X e Y de las 2 cartas seleccionadas
+    * @param control necesario para enviar parametros de cada click
+    */
+    public void mouseEvent(Control control){
+        this.setOnMouseClicked((event) -> {
             c++;
             if(c==1) {
                 columna = (int)(event.getX() / Carta.TAM_CARTA);
@@ -63,18 +80,23 @@ public class Tablero extends GridPane {
             }
                   
         });
-       
-    } 
+    }
     
     public void ocultarImagenes() {
-        timelineImagen = new Timeline(
+        /*timelineImagen = new Timeline(
             new KeyFrame(Duration.seconds(3.000), new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {                    
                     System.out.println("duro 3 segundos");
                 }        
             })
-        );
+        );*/
+        for(int x=0; x<Control.tamXTablero;x++){   
+            for(int y=0; y<Control.tamYTablero;y++){
+                
+
+            }
+        }  
     }
     
  
