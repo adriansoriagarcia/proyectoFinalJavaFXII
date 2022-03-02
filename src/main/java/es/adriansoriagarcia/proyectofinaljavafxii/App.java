@@ -29,6 +29,7 @@ public class App extends Application {
         //(short)6,(short)6
         Control control= new Control();
         
+<<<<<<< HEAD
         //boolean prueba = control.buscarPareja(Tablero.columna,Tablero.fila,Tablero.columna1,Tablero.fila1);
         //System.out.println(prueba);
         
@@ -41,6 +42,19 @@ public class App extends Application {
         Tablero tablero = new Tablero(control);
         paneRoot.getChildren().add(tablero);
         
+=======
+        boolean prueba = control.buscarPareja(0,0,1,0);
+        System.out.println(prueba);
+        
+        boolean fin = control.finPartida();
+        System.out.println("fin partida " +fin);
+        
+        control.mostrarTableroConsola();
+        
+        Tablero tablero = new Tablero();
+        paneRoot.getChildren().add(tablero);
+        
+>>>>>>> 79619659374fe550171a58ec7e6f086386a97299
         
         
     }
