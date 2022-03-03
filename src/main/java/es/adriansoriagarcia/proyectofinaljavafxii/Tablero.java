@@ -5,14 +5,19 @@
  */
 package es.adriansoriagarcia.proyectofinaljavafxii;
 
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.util.Duration;
 
 
 /**
  *
- * @author usuario
+ * @author adrián
  */
 
 //Recorre el array de numeros y dependiendo del valor de cada posición coloca una imagen en grindpanel
@@ -27,13 +32,19 @@ public class Tablero extends GridPane {
     Control control;
     Carta carta;
     Timeline timelineImagen;
+    Image cartaBackground;
+    ImageView imgView;
     private boolean congelado=false;
+    ImageView [][] imageOculta;
+    boolean controlAcierto;
     
     
     public Tablero(Control control) { 
+       imageOculta = new ImageView [Control.tamXTablero][Control.tamYTablero];
        setImage();
-       mouseEvent(control);
        ocultarImagenes();
+       mouseEvent(control);
+       
        
     } 
     /*
@@ -41,11 +52,11 @@ public class Tablero extends GridPane {
     */
     public void setImage(){
         for(int x=0; x<Control.tamXTablero;x++){   
-        for(int y=0; y<Control.tamYTablero;y++){
+         for(int y=0; y<Control.tamYTablero;y++){
             carta = new Carta((byte)Control.tablero[x][y]);
             this.add(carta,x,y);
 
-        }
+         }
        }  
     }
     
@@ -59,11 +70,13 @@ public class Tablero extends GridPane {
             if(c==1) {
                 columna = (int)(event.getX() / Carta.TAM_CARTA);
                 fila = (int)(event.getY() / Carta.TAM_CARTA);
+                imageOculta[columna][fila].setVisible(false);
                 //System.out.println("colum carta 1 " + columna);
                 //System.out.println("fila carta 1 " + fila);
             }else if (c==2){
                 columna1 = (int)(event.getX() / Carta.TAM_CARTA);
                 fila1 = (int)(event.getY() / Carta.TAM_CARTA);
+                imageOculta[columna1][fila1].setVisible(false);
                 //System.out.println("colum carta 2 " + columna1);
                 //System.out.println(" fila carta 2 " + fila1);
                 //System.out.println(c);
@@ -72,9 +85,12 @@ public class Tablero extends GridPane {
                 System.out.println("colum carta2 " + columna1);
                 System.out.println(" fila carta2 " + fila1);
                 control.buscarPareja(columna,fila,columna1,fila1);
-                boolean prueba = control.buscarPareja(columna,fila,columna1,fila1);
-                c=0; 
-                System.out.println(prueba);
+                controlAcierto = control.buscarPareja(columna,fila,columna1,fila1);
+                System.out.println(controlAcierto);
+                if (controlAcierto == false) {
+                    ocultarImagenesDistintas();
+                }
+                c=0;    
             }else{ //mas de 2 clic consecutivos no toma en cuenta
                     c=0; 
             }
@@ -83,23 +99,33 @@ public class Tablero extends GridPane {
     }
     
     public void ocultarImagenes() {
-        /*timelineImagen = new Timeline(
-            new KeyFrame(Duration.seconds(3.000), new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent t) {                    
-                    System.out.println("duro 3 segundos");
-                }        
-            })
-        );*/
         for(int x=0; x<Control.tamXTablero;x++){   
             for(int y=0; y<Control.tamYTablero;y++){
-                
+                cartaBackground = new Image(getClass().getResourceAsStream("/images/30.jpg"));
+                imgView = new ImageView(cartaBackground);
+                this.add(imgView, x, y); 
+                imageOculta[x][y]=imgView;
 
             }
         }  
     }
     
- 
+    /**
+     * Oculta las imágenes cuando no coinciden
+     */
+    public void ocultarImagenesDistintas(){
+        
+        timelineImagen = new Timeline(
+            new KeyFrame(Duration.seconds(2.000), (ActionEvent t) -> {
+                imageOculta[columna][fila].setVisible(true);
+                imageOculta[columna1][fila1].setVisible(true);
+                timelineImagen.stop();
+        })
+        );
+        timelineImagen.setCycleCount(Timeline.INDEFINITE);
+        timelineImagen.play();
+    }
+
 }
 
 

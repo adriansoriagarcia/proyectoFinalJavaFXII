@@ -16,8 +16,8 @@ public class App extends Application {
     public void start(Stage stage) {
         // Panel principal que contendrá los elementos de la pantalla
         GridPane paneRoot;
-        short tamXPantalla=640;
-        short tamYPantalla=570;
+        final short tamXPantalla=640;//Constante con el tamaño horizontal de la pantalla
+        final short tamYPantalla=570;//Constante con el tamaño vertical de la pantalla
         
         paneRoot = new GridPane();
         var scene = new Scene(paneRoot, tamXPantalla, tamYPantalla);
@@ -29,8 +29,6 @@ public class App extends Application {
         //(short)6,(short)6
         Control control= new Control();
         
-        //boolean prueba = control.buscarPareja(Tablero.columna,Tablero.fila,Tablero.columna1,Tablero.fila1);
-        //System.out.println(prueba);
         
         //boolean fin = control.finPartida();
         //System.out.println("fin partida " +fin);

@@ -12,17 +12,17 @@ import java.util.Random;
  * @author adrián
  */
 public class Control {
-    static short tamXTablero;
-    static short tamYTablero;            
-    static int [][] tablero;
-    static char [][] encontrado;
+    static short tamXTablero; //Declaración variable tamaño X tablero
+    static short tamYTablero; //Declaración variable tamaño Y tablero          
+    static int [][] tablero; //Declaración array tablero
+    static char [][] encontrado;//Declaración array encontrado
     final char VACIO= 0;
     final char SIPAREJA= 'S';
     final char NOPAREJA= 'N';
-    int aleatorioFilas;
-    int aleatorioColumnas;
-    int aleatorioFilas1;
-    int aleatorioColumnas1;
+    int aleatorioFilas;//Variable
+    int aleatorioColumnas;//Variable
+    int aleatorioFilas1;//Variable
+    int aleatorioColumnas1;//Variable
     boolean finPartida = false;
     char turnoJugador = JUGADOR1;
     static final char JUGADOR1 = '1';
@@ -129,7 +129,7 @@ public class Control {
         //System.out.println("Xcarta2 " + posXcarta2);
         //System.out.println("Ycarta2 " + posYcarta2);
         System.out.println("carta1 " + tablero[posXcarta1][posYcarta1]);
-        System.out.println("carta 2 " + tablero[posXcarta2][posYcarta2]);
+        System.out.println("carta2 " + tablero[posXcarta2][posYcarta2]);
         mostrarTableroConsola();
        if(tablero[posXcarta1][posYcarta1] == tablero[posXcarta2][posYcarta2]){
             encontrado[posXcarta1][posYcarta1] = SIPAREJA; 
