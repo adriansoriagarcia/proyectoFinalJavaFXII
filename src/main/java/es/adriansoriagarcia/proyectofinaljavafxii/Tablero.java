@@ -7,6 +7,8 @@ package es.adriansoriagarcia.proyectofinaljavafxii;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
@@ -40,28 +42,39 @@ public class Tablero extends GridPane {
     ImageView [][] imageOculta;
     boolean controlAcierto;
     Button myButton;
-    static ChoiceBox nivelDifi;
+    final ChoiceBox<String> nivelDifi;
+    String valor;
     
     /*
      * Método constructor de la clase Tablero.
     */
     public Tablero(Control control) { 
-       myButton = new Button("Iniciar");
-       myButton.setMaxSize(100,50);
-       this.add(myButton, 6, 1);
+        myButton = new Button("Iniciar");
+        myButton.setMaxSize(100,50);
+        this.add(myButton, 6, 1);
        
-       nivelDifi = new ChoiceBox(FXCollections.observableArrayList(
-        "Facil", "Medio", "Dificil")
-       );
+       
+        nivelDifi = new ChoiceBox<String>();
+        nivelDifi.getSelectionModel().select("Medio");
 
+        nivelDifi.getItems().add("Facil");
+        nivelDifi.getItems().add("Medio");
+        nivelDifi.getItems().add("Dificil");
+
+        nivelDifi.getSelectionModel()
+            .selectedItemProperty()
+            .addListener( (ObservableValue<? extends String> observable, String oldValue, String newValue) -> System.out.println(newValue) );
+
+        this.add(nivelDifi, 7, 0);
+        
        
-       this.add(nivelDifi, 6, 0);
-       System.out.println(nivelDifi.getValue());//Valor seleccionado nivel dificultad
-       
-       imageOculta = new ImageView [Control.tamXTablero][Control.tamYTablero];
-       ocultarImagenes();
-       muestraImagenesInicio(control);
-       //mouseEvent(control); 
+        System.out.println(nivelDifi.getValue());//Valor seleccionado nivel dificultad
+        //System.out.println(nivelDifi.getSelectionModel(). getSelectedItem());
+
+        imageOculta = new ImageView [Control.tamXTablero][Control.tamYTablero];
+        ocultarImagenes();
+        muestraImagenesInicio(control);
+        //mouseEvent(control); 
        
     } 
     /*

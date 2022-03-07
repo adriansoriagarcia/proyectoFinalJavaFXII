@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 
 
 public class Carta extends ImageView {
-    
+
     static final int TAM_CARTA=140;
     //Método constructor Casilla
     /**
