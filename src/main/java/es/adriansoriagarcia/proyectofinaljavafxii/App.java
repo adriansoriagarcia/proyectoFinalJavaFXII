@@ -16,7 +16,7 @@ public class App extends Application {
     public void start(Stage stage) {
         // Panel principal que contendrá los elementos de la pantalla
         GridPane paneRoot;
-        final short tamXPantalla=640;//Constante con el tamaño horizontal de la pantalla
+        final short tamXPantalla=800;//Constante con el tamaño horizontal de la pantalla
         final short tamYPantalla=570;//Constante con el tamaño vertical de la pantalla
         
         paneRoot = new GridPane();

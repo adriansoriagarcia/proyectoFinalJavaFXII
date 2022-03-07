@@ -7,8 +7,10 @@ package es.adriansoriagarcia.proyectofinaljavafxii;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -31,26 +33,61 @@ public class Tablero extends GridPane {
     int fila1;
     Control control;
     Carta carta;
+    Timeline timelineocultaImagen;
     Timeline timelineImagen;
     Image cartaBackground;
     ImageView imgView;
-    private boolean congelado=false;
     ImageView [][] imageOculta;
     boolean controlAcierto;
+    Button myButton;
+    static ChoiceBox nivelDifi;
     
-    
+    /*
+     * Método constructor de la clase Tablero.
+    */
     public Tablero(Control control) { 
-       imageOculta = new ImageView [Control.tamXTablero][Control.tamYTablero];
-       setImage();
-       ocultarImagenes();
-       mouseEvent(control);
+       myButton = new Button("Iniciar");
+       myButton.setMaxSize(100,50);
+       this.add(myButton, 6, 1);
        
+       nivelDifi = new ChoiceBox(FXCollections.observableArrayList(
+        "Facil", "Medio", "Dificil")
+       );
+
+       
+       this.add(nivelDifi, 6, 0);
+       System.out.println(nivelDifi.getValue());//Valor seleccionado nivel dificultad
+       
+       imageOculta = new ImageView [Control.tamXTablero][Control.tamYTablero];
+       ocultarImagenes();
+       muestraImagenesInicio(control);
+       //mouseEvent(control); 
        
     } 
     /*
+     * Muestra las imágenes de todo el tablero durante x segundos al iniciar.
+    */
+    public void muestraImagenesInicio(Control control){
+        myButton.setOnAction((t) -> {
+            anadeImagenes();
+            timelineImagen.play(); 
+        });
+        
+        timelineImagen = new Timeline(
+            new KeyFrame(Duration.seconds(4.000), (ActionEvent t) -> {
+               ocultarImagenes(); 
+               mouseEvent(control); 
+               //myButton.setCancelButton(false);
+               myButton.setVisible(false);
+        })
+        );
+        timelineImagen.setCycleCount(1);
+        //timelineImagen.play();
+    }
+    /*
      * Asigna la imágen que contendra cada casilla
     */
-    public void setImage(){
+    public void anadeImagenes(){
         for(int x=0; x<Control.tamXTablero;x++){   
          for(int y=0; y<Control.tamYTablero;y++){
             carta = new Carta((byte)Control.tablero[x][y]);
@@ -67,6 +104,7 @@ public class Tablero extends GridPane {
     public void mouseEvent(Control control){
         this.setOnMouseClicked((event) -> {
             c++;
+            System.out.println(c);
             if(c==1) {
                 columna = (int)(event.getX() / Carta.TAM_CARTA);
                 fila = (int)(event.getY() / Carta.TAM_CARTA);
@@ -89,15 +127,16 @@ public class Tablero extends GridPane {
                 System.out.println(controlAcierto);
                 if (controlAcierto == false) {
                     ocultarImagenesDistintas();
-                }
-                c=0;    
-            }else{ //mas de 2 clic consecutivos no toma en cuenta
-                    c=0; 
+                } 
+                c=0;
             }
                   
         });
     }
     
+    /*
+     * Oculta todas las imágenes del tablero.
+    */
     public void ocultarImagenes() {
         for(int x=0; x<Control.tamXTablero;x++){   
             for(int y=0; y<Control.tamYTablero;y++){
@@ -115,15 +154,16 @@ public class Tablero extends GridPane {
      */
     public void ocultarImagenesDistintas(){
         
-        timelineImagen = new Timeline(
-            new KeyFrame(Duration.seconds(2.000), (ActionEvent t) -> {
-                imageOculta[columna][fila].setVisible(true);
-                imageOculta[columna1][fila1].setVisible(true);
-                timelineImagen.stop();
+        timelineocultaImagen = new Timeline(
+            new KeyFrame(Duration.seconds(1.000), (ActionEvent t) -> {
+                imageOculta[columna][fila].setVisible(true);//Oculta la imágen levantada
+                imageOculta[columna1][fila1].setVisible(true);//Oculta la imágen levantada
+                c=0;//Contador de clic en 0 una vez ocultada las imagenes para no mostrar mas de 2 imágenes 
+ 
         })
         );
-        timelineImagen.setCycleCount(Timeline.INDEFINITE);
-        timelineImagen.play();
+        timelineocultaImagen.setCycleCount(1);
+        timelineocultaImagen.play();
     }
 
 }
