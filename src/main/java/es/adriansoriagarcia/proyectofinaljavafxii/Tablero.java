@@ -28,13 +28,13 @@ import javafx.util.Duration;
 public class Tablero extends GridPane {
     
     public boolean play = false;
-    int c=0;
-    int columna;
-    int fila;
-    int columnaTemporal;
-    int filaTemporal;
-    int columna1;
-    int fila1;
+    byte c=0;
+    byte columna;
+    byte fila;
+    byte columnaTemporal;
+    byte filaTemporal;
+    byte columna1;
+    byte fila1;
     Control control;
     Carta carta;
     Timeline timelineocultaImagen;
@@ -46,7 +46,7 @@ public class Tablero extends GridPane {
     Button myButton;
     final ChoiceBox<String> nivelDifi;
     String valor;
-    short intentosRestantes = 30;
+    short intentosRestantes;
     
     /*
      * Método constructor de la clase Tablero.
@@ -69,6 +69,8 @@ public class Tablero extends GridPane {
             .addListener( (ObservableValue<? extends String> observable, String oldValue, String newValue) -> System.out.println(newValue) );
         this.add(nivelDifi, 7, 0);
         
+        valor=nivelDifi.getValue();
+        System.out.println(valor + "variable");
        
         //System.out.println(nivelDifi.getValue());//Valor seleccionado nivel dificultad
         //System.out.println(nivelDifi.getSelectionModel(). getSelectedItem());
@@ -118,13 +120,14 @@ public class Tablero extends GridPane {
     */
     public void mouseEvent(Control control){
         this.setOnMouseClicked((event) -> {
-            columnaTemporal = (int)(event.getX() / Carta.TAM_CARTA);
-            filaTemporal = (int)(event.getY() / Carta.TAM_CARTA);
-
+            columnaTemporal = (byte)(event.getX() / Carta.TAM_CARTA);
+            filaTemporal = (byte)(event.getY() / Carta.TAM_CARTA);
+            
+            //if que controla que no se pueda volver a tapar una carta acertada.
             if(Control.encontrado[columnaTemporal][filaTemporal] == Control.SIPAREJA) {
                     imageOculta[columnaTemporal][filaTemporal].setVisible(false);
                     
-            }else {
+            }else {//en el caso de que no este levantada levanta las correspondiente a las 2 deseadas.
                 c++;
                 System.out.println(c);
                 if(c==1) {  
@@ -135,7 +138,6 @@ public class Tablero extends GridPane {
                     System.out.println("colum carta 1 " + columna);
                     System.out.println("fila carta 1 " + fila);
                 }else if (c==2){
-                
                     columna1 = columnaTemporal;
                     fila1 = filaTemporal;
                     imageOculta[columna1][fila1].setVisible(false);
@@ -154,10 +156,13 @@ public class Tablero extends GridPane {
                     //System.out.println("fila carta1 " + fila);
                     //System.out.println("colum carta2 " + columna1);
                     //System.out.println(" fila carta2 " + fila1);
+                    
+                    //Si la pareja mostrada es distinta llama al metodo para ocultarlas.
                     if (controlAcierto == false) {
                         ocultarImagenesDistintas();
                     }else {
                        c=0; 
+                       
                     } 
                     //System.out.println(intentosRestantes);  
                 }
@@ -201,14 +206,13 @@ public class Tablero extends GridPane {
         timelineocultaImagen.play();
     }
     
-    public void finPartida(){
+    public void fin(){
         boolean fin = control.finPartida();
-        //System.out.println("fin partida " +fin);
+        System.out.println("fin partida " +fin);
     }
 
 }
 
-//todas las cartas levantadas no pueden volver a utilizarse.
 //el nivel de dificultad depende de la cantidad de click disponibles
 
 
