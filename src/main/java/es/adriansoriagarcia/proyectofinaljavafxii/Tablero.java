@@ -31,6 +31,8 @@ public class Tablero extends GridPane {
     int c=0;
     int columna;
     int fila;
+    int columnaTemporal;
+    int filaTemporal;
     int columna1;
     int fila1;
     Control control;
@@ -44,6 +46,7 @@ public class Tablero extends GridPane {
     Button myButton;
     final ChoiceBox<String> nivelDifi;
     String valor;
+    short intentosRestantes = 30;
     
     /*
      * Método constructor de la clase Tablero.
@@ -51,7 +54,7 @@ public class Tablero extends GridPane {
     public Tablero(Control control) { 
         myButton = new Button("Iniciar");
         myButton.setMaxSize(100,50);
-        this.add(myButton, 6, 1);
+        this.add(myButton, 7, 1);
        
        
         nivelDifi = new ChoiceBox<String>();
@@ -64,11 +67,10 @@ public class Tablero extends GridPane {
         nivelDifi.getSelectionModel()
             .selectedItemProperty()
             .addListener( (ObservableValue<? extends String> observable, String oldValue, String newValue) -> System.out.println(newValue) );
-
         this.add(nivelDifi, 7, 0);
         
        
-        System.out.println(nivelDifi.getValue());//Valor seleccionado nivel dificultad
+        //System.out.println(nivelDifi.getValue());//Valor seleccionado nivel dificultad
         //System.out.println(nivelDifi.getSelectionModel(). getSelectedItem());
 
         imageOculta = new ImageView [Control.tamXTablero][Control.tamYTablero];
@@ -116,35 +118,55 @@ public class Tablero extends GridPane {
     */
     public void mouseEvent(Control control){
         this.setOnMouseClicked((event) -> {
-            c++;
-            System.out.println(c);
-            if(c==1) {
-                columna = (int)(event.getX() / Carta.TAM_CARTA);
-                fila = (int)(event.getY() / Carta.TAM_CARTA);
-                imageOculta[columna][fila].setVisible(false);
-                //System.out.println("colum carta 1 " + columna);
-                //System.out.println("fila carta 1 " + fila);
-            }else if (c==2){
-                columna1 = (int)(event.getX() / Carta.TAM_CARTA);
-                fila1 = (int)(event.getY() / Carta.TAM_CARTA);
-                imageOculta[columna1][fila1].setVisible(false);
-                //System.out.println("colum carta 2 " + columna1);
-                //System.out.println(" fila carta 2 " + fila1);
-                //System.out.println(c);
-                System.out.println("colum carta1 " + columna);
-                System.out.println("fila carta1 " + fila);
-                System.out.println("colum carta2 " + columna1);
-                System.out.println(" fila carta2 " + fila1);
-                control.buscarPareja(columna,fila,columna1,fila1);
-                controlAcierto = control.buscarPareja(columna,fila,columna1,fila1);
-                System.out.println(controlAcierto);
-                if (controlAcierto == false) {
-                    ocultarImagenesDistintas();
-                } 
-                c=0;
+            columnaTemporal = (int)(event.getX() / Carta.TAM_CARTA);
+            filaTemporal = (int)(event.getY() / Carta.TAM_CARTA);
+
+            if(Control.encontrado[columnaTemporal][filaTemporal] == Control.SIPAREJA) {
+                    imageOculta[columnaTemporal][filaTemporal].setVisible(false);
+                    
+            }else {
+                c++;
+                System.out.println(c);
+                if(c==1) {  
+                    columna = columnaTemporal;
+                    fila =  filaTemporal;
+                    imageOculta[columna][fila].setVisible(false);
+
+                    System.out.println("colum carta 1 " + columna);
+                    System.out.println("fila carta 1 " + fila);
+                }else if (c==2){
+                
+                    columna1 = columnaTemporal;
+                    fila1 = filaTemporal;
+                    imageOculta[columna1][fila1].setVisible(false);
+                    intentosRestantes--;
+                    System.out.println("colum carta 2 " + columna1);
+                    System.out.println(" fila carta 2 " + fila1);
+                    //System.out.println(c);
+                    if(columna==columna1 && fila==fila1) {
+                        c--;
+                    }else {
+                        control.buscarPareja(columna,fila,columna1,fila1);
+                        controlAcierto = control.buscarPareja(columna,fila,columna1,fila1);
+                        System.out.println(controlAcierto);
+                    }
+                    //System.out.println("colum carta1 " + columna);
+                    //System.out.println("fila carta1 " + fila);
+                    //System.out.println("colum carta2 " + columna1);
+                    //System.out.println(" fila carta2 " + fila1);
+                    if (controlAcierto == false) {
+                        ocultarImagenesDistintas();
+                    }else {
+                       c=0; 
+                    } 
+                    //System.out.println(intentosRestantes);  
+                }
             }
-                  
+            
+            
+                
         });
+        
     }
     
     /*
@@ -166,7 +188,7 @@ public class Tablero extends GridPane {
      * Oculta las imágenes cuando no coinciden
      */
     public void ocultarImagenesDistintas(){
-        
+
         timelineocultaImagen = new Timeline(
             new KeyFrame(Duration.seconds(1.000), (ActionEvent t) -> {
                 imageOculta[columna][fila].setVisible(true);//Oculta la imágen levantada
@@ -178,7 +200,15 @@ public class Tablero extends GridPane {
         timelineocultaImagen.setCycleCount(1);
         timelineocultaImagen.play();
     }
+    
+    public void finPartida(){
+        boolean fin = control.finPartida();
+        //System.out.println("fin partida " +fin);
+    }
 
 }
+
+//todas las cartas levantadas no pueden volver a utilizarse.
+//el nivel de dificultad depende de la cantidad de click disponibles
 
 

@@ -17,8 +17,8 @@ public class Control {
     static int [][] tablero; //Declaración array tablero
     static char [][] encontrado;//Declaración array encontrado
     final char VACIO= 0;
-    final char SIPAREJA= 'S';
-    final char NOPAREJA= 'N';
+    static final char SIPAREJA= 'S';
+    static final char NOPAREJA= 'N';
     int aleatorioFilas;//Variable
     int aleatorioColumnas;//Variable
     int aleatorioFilas1;//Variable

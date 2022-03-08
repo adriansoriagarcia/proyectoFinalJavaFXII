@@ -1,6 +1,7 @@
 package es.adriansoriagarcia.proyectofinaljavafxii;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -20,6 +21,7 @@ public class App extends Application {
         final short tamYPantalla=570;//Constante con el tamaño vertical de la pantalla
         
         paneRoot = new GridPane();
+        paneRoot.setAlignment(Pos.CENTER);
         var scene = new Scene(paneRoot, tamXPantalla, tamYPantalla);
         stage.setScene(scene);
         stage.show();
