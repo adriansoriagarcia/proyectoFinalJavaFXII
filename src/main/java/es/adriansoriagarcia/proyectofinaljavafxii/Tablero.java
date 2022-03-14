@@ -5,14 +5,14 @@
  */
 package es.adriansoriagarcia.proyectofinaljavafxii;
 
+import static es.adriansoriagarcia.proyectofinaljavafxii.PanelLateral.textClick;
+import static es.adriansoriagarcia.proyectofinaljavafxii.PanelLateral.textTiempo;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -39,67 +39,89 @@ public class Tablero extends GridPane {
     Carta carta;
     Timeline timelineocultaImagen;
     Timeline timelineImagen;
+    Timeline timelineCuentaAtras;
+    Timeline timelineEsperaFin;
     Image cartaBackground;
     ImageView imgView;
     ImageView [][] imageOculta;
     boolean controlAcierto;
-    Button myButton;
-    final ChoiceBox<String> nivelDifi;
-    String valor;
-    short intentosRestantes;
+    Button ButtonInicio;
+    Button ButtonReinicio;
+    int valor;
+    static short intentosRestantes;
+    byte cuentaAtras = 4;
+    final int TEXT_SIZE = 24;
+    int selectedNivel;//Indice del nivel de dificultad
     
     /*
      * Método constructor de la clase Tablero.
     */
-    public Tablero(Control control) { 
-        myButton = new Button("Iniciar");
-        myButton.setMaxSize(100,50);
-        this.add(myButton, 7, 1);
-       
-       
-        nivelDifi = new ChoiceBox<String>();
-        nivelDifi.getSelectionModel().select("Medio");
-
-        nivelDifi.getItems().add("Facil");
-        nivelDifi.getItems().add("Medio");
-        nivelDifi.getItems().add("Dificil");
-
-        nivelDifi.getSelectionModel()
-            .selectedItemProperty()
-            .addListener( (ObservableValue<? extends String> observable, String oldValue, String newValue) -> System.out.println(newValue) );
-        this.add(nivelDifi, 7, 0);
+    public Tablero() { 
+        this.setAlignment(Pos.CENTER);
+        control= new Control();
+        //panel= new PanelLateral();
+ 
         
-        valor=nivelDifi.getValue();
-        System.out.println(valor + "variable");
+        PanelLateral.ButtonInicio = new Button("Iniciar");
+        PanelLateral.ButtonReinicio = new Button("Reiniciar");
        
-        //System.out.println(nivelDifi.getValue());//Valor seleccionado nivel dificultad
-        //System.out.println(nivelDifi.getSelectionModel(). getSelectedItem());
-
+        PanelLateral.ButtonReinicio.setVisible(false);
+        //----------------------------------------------------------------------
+        //array de tamaño del tablero
         imageOculta = new ImageView [Control.tamXTablero][Control.tamYTablero];
         ocultarImagenes();
         muestraImagenesInicio(control);
-        //mouseEvent(control); 
+        
+
+        //----------------------------------------------------------------------
+
        
     } 
     /*
      * Muestra las imágenes de todo el tablero durante x segundos al iniciar.
     */
-    public void muestraImagenesInicio(Control control){
-        myButton.setOnAction((t) -> {
+    private void muestraImagenesInicio(Control control){
+        PanelLateral.ButtonInicio.setOnAction((t) -> {
             anadeImagenes();
-            timelineImagen.play(); 
+            timelineCuentaAtras.play();
+            timelineImagen.play();
+            this.setDisable(false);//Activamos el gridPane para empezar la partida
+            
         });
         
+        //Timeline para la cuenta atras 
+        timelineCuentaAtras = new Timeline(
+            new KeyFrame(Duration.seconds(0.990), (ActionEvent t) -> {
+            cuentaAtras--; 
+            PanelLateral.textTiempo.setText(String.valueOf(cuentaAtras));
+            PanelLateral.textTiempo.setText(String.valueOf(cuentaAtras));
+            textTiempo.setText(String.valueOf(cuentaAtras));
+            if (cuentaAtras==0){
+               timelineCuentaAtras.stop();
+            }
+                System.out.println(cuentaAtras);
+                
+               
+        })
+        );
+        timelineCuentaAtras.setCycleCount(Timeline.INDEFINITE);
+        //timelineCuentaAtras.play();
+        //timelineCuentaAtras.play();
+
+        //Timeline con espera de 4 segundos para ocultar las cartas
         timelineImagen = new Timeline(
             new KeyFrame(Duration.seconds(4.000), (ActionEvent t) -> {
                ocultarImagenes(); 
                mouseEvent(control); 
                //myButton.setCancelButton(false);
-               myButton.setVisible(false);
+               PanelLateral.ButtonInicio.setVisible(false);
+               
         })
         );
         timelineImagen.setCycleCount(1);
         //timelineImagen.play();
+      
+
     }
     /*
      * Asigna la imágen que contendra cada casilla
@@ -120,9 +142,11 @@ public class Tablero extends GridPane {
     */
     public void mouseEvent(Control control){
         this.setOnMouseClicked((event) -> {
+            //System.out.println("entra en mouse event");
             columnaTemporal = (byte)(event.getX() / Carta.TAM_CARTA);
             filaTemporal = (byte)(event.getY() / Carta.TAM_CARTA);
-            
+            System.out.println(columnaTemporal);
+            System.out.println(filaTemporal);
             //if que controla que no se pueda volver a tapar una carta acertada.
             if(Control.encontrado[columnaTemporal][filaTemporal] == Control.SIPAREJA) {
                     imageOculta[columnaTemporal][filaTemporal].setVisible(false);
@@ -130,27 +154,40 @@ public class Tablero extends GridPane {
             }else {//en el caso de que no este levantada levanta las correspondiente a las 2 deseadas.
                 c++;
                 System.out.println(c);
-                if(c==1) {  
+                if(c==1) { //Primer click
                     columna = columnaTemporal;
                     fila =  filaTemporal;
                     imageOculta[columna][fila].setVisible(false);
 
                     System.out.println("colum carta 1 " + columna);
                     System.out.println("fila carta 1 " + fila);
-                }else if (c==2){
+                }else if (c==2){//Segundo click
                     columna1 = columnaTemporal;
                     fila1 = filaTemporal;
                     imageOculta[columna1][fila1].setVisible(false);
-                    intentosRestantes--;
+
+                    //intentosRestantes--;
+                    
+                    //finPerdida();
+
                     System.out.println("colum carta 2 " + columna1);
                     System.out.println(" fila carta 2 " + fila1);
                     //System.out.println(c);
+                    //If que controla si se pulsa dos veces sobre la misma carta no cuente el segundo click.
                     if(columna==columna1 && fila==fila1) {
                         c--;
-                    }else {
+                    }else {//Envia los cuatro parámetros de las 2 cartas seleccionadas.
+                        intentosRestantes--;
+                        textClick.setText(String.valueOf(intentosRestantes));
+                        finPerdida();
                         control.buscarPareja(columna,fila,columna1,fila1);
                         controlAcierto = control.buscarPareja(columna,fila,columna1,fila1);
                         System.out.println(controlAcierto);
+                        boolean fin = control.finPartida();
+                        if(fin==true) {
+                            finGanada();
+                        }
+                        System.out.println("fin partida " +fin);
                     }
                     //System.out.println("colum carta1 " + columna);
                     //System.out.println("fila carta1 " + fila);
@@ -167,8 +204,7 @@ public class Tablero extends GridPane {
                     //System.out.println(intentosRestantes);  
                 }
             }
-            
-            
+             
                 
         });
         
@@ -177,7 +213,7 @@ public class Tablero extends GridPane {
     /*
      * Oculta todas las imágenes del tablero.
     */
-    public void ocultarImagenes() {
+    private void ocultarImagenes() {
         for(int x=0; x<Control.tamXTablero;x++){   
             for(int y=0; y<Control.tamYTablero;y++){
                 cartaBackground = new Image(getClass().getResourceAsStream("/images/30.jpg"));
@@ -206,9 +242,89 @@ public class Tablero extends GridPane {
         timelineocultaImagen.play();
     }
     
-    public void fin(){
-        boolean fin = control.finPartida();
-        System.out.println("fin partida " +fin);
+    public void finPerdida(){
+        
+        if (intentosRestantes==0){
+            System.out.println("entra en fin perdida");
+            timelineEsperaFin = new Timeline(
+            new KeyFrame(Duration.seconds(1.000), (ActionEvent t) -> {
+               ocultarImagenes();//llama al metodo ocultarImagenes.
+ 
+            })
+            );
+            timelineEsperaFin.setCycleCount(1);
+            timelineEsperaFin.play();
+            //System.out.println("fin partida perdida");
+            
+            //ocultarImagenesDistintas();
+             Alert alert = new Alert(Alert.AlertType.INFORMATION);
+             alert.setHeaderText(null);
+             alert.setTitle("Fin");
+             alert.setContentText("Has perdido");
+             alert.showAndWait();
+             intentosRestantes=0;
+             this.setDisable(true);//Desactivamos el gridPane para no poder realizar ninguna acción
+             //textClick.setVisible(false);
+             PanelLateral.ButtonReinicio.setVisible(true);
+             PanelLateral.ButtonReinicio.setOnAction((t) -> {
+                 reinicio();
+                 //eliminarCartas();
+
+            });
+        }
+    }
+    
+    public void finGanada(){
+        System.out.println("fin partida ganada");
+        timelineEsperaFin = new Timeline(
+            new KeyFrame(Duration.seconds(1.000), (ActionEvent t) -> {
+               ocultarImagenes();
+ 
+            })
+        );
+        timelineEsperaFin.setCycleCount(1);
+        timelineEsperaFin.play();
+        
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("Fin");
+        alert.setContentText("Lo has conseguido");
+        alert.showAndWait();
+        intentosRestantes=0;
+        this.setDisable(true);//Desactivamos el gridPane para no poder realizar ninguna acción
+        //textClick.setVisible(false);
+        PanelLateral.ButtonReinicio.setVisible(true);
+        PanelLateral.ButtonReinicio.setOnAction((t) -> {
+            reinicio();
+            //eliminarCartas();
+
+        });
+        
+    }
+    
+    public void reinicio(){
+        control= new Control();
+        //textClick.setVisible(true);
+        intentosRestantes=5;
+        cuentaAtras = 4;
+        ocultarImagenes();
+        muestraImagenesInicio(control);
+        PanelLateral.ButtonReinicio.setVisible(false);
+        PanelLateral.ButtonInicio.setVisible(true);
+        
+        
+    }
+    
+    public void eliminarCartas(){
+        
+        for(int x=0; x<=23;x++){   
+            this.getChildren().remove(x);
+        }  
+        //this.getChildren().size();
+
+        System.out.println(this.getChildren().size());
+
     }
 
 }

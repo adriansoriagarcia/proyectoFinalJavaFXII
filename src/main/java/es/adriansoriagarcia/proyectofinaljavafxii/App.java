@@ -3,7 +3,7 @@ package es.adriansoriagarcia.proyectofinaljavafxii;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
@@ -16,30 +16,30 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
         // Panel principal que contendrá los elementos de la pantalla
-        GridPane paneRoot;
+        Pane paneRoot;
         final short tamXPantalla=800;//Constante con el tamaño horizontal de la pantalla
-        final short tamYPantalla=570;//Constante con el tamaño vertical de la pantalla
+        final short tamYPantalla=580;//Constante con el tamaño vertical de la pantalla
         
-        paneRoot = new GridPane();
-        paneRoot.setAlignment(Pos.CENTER);
+        paneRoot = new Pane();
+        //paneRoot.setAlignment(Pos.CENTER);
         var scene = new Scene(paneRoot, tamXPantalla, tamYPantalla);
         stage.setScene(scene);
         stage.show();
         stage.setTitle("Memoria");
+        stage.setResizable(false);
         
         //TAMAÑOS TABLERO(4X4|6X6)
         //(short)6,(short)6
-        Control control= new Control();
-        
-        
-        //boolean fin = control.finPartida();
-        //System.out.println("fin partida " +fin);
-        
-        //control.mostrarTableroConsola();
-        
-        
-        Tablero tablero = new Tablero(control);
+        Tablero tablero = new Tablero();
+        tablero.setLayoutX(10);
+        tablero.setLayoutY(10);
         paneRoot.getChildren().add(tablero);
+        //tablero.
+        
+        PanelLateral panel = new PanelLateral();
+        panel.setLayoutX(600);
+        panel.setLayoutY(180);
+        paneRoot.getChildren().add(panel);
         
         
         
