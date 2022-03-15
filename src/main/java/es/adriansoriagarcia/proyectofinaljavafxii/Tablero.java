@@ -48,7 +48,7 @@ public class Tablero extends GridPane {
     Button ButtonInicio;
     Button ButtonReinicio;
     int valor;
-    static short intentosRestantes;
+    static short intentosRestantes = 5;
     byte cuentaAtras = 4;
     final int TEXT_SIZE = 24;
     int selectedNivel;//Indice del nivel de dificultad
@@ -57,6 +57,10 @@ public class Tablero extends GridPane {
      * Método constructor de la clase Tablero.
     */
     public Tablero() { 
+        //this.setMinWidth(Carta.TAM_CARTA * Control.tamXTablero);
+        //this.setMinHeight(Carta.TAM_CARTA * (Control.tamYTablero + 1)); 
+        //this.setMaxWidth(Carta.TAM_CARTA * Control.tamXTablero);
+        //this.setMaxHeight(Carta.TAM_CARTA * (Control.tamYTablero + 1)); 
         this.setAlignment(Pos.CENTER);
         control= new Control();
         //panel= new PanelLateral();
@@ -93,7 +97,6 @@ public class Tablero extends GridPane {
         timelineCuentaAtras = new Timeline(
             new KeyFrame(Duration.seconds(0.990), (ActionEvent t) -> {
             cuentaAtras--; 
-            PanelLateral.textTiempo.setText(String.valueOf(cuentaAtras));
             PanelLateral.textTiempo.setText(String.valueOf(cuentaAtras));
             textTiempo.setText(String.valueOf(cuentaAtras));
             if (cuentaAtras==0){

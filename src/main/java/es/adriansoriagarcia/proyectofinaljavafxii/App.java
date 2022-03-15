@@ -34,7 +34,6 @@ public class App extends Application {
         tablero.setLayoutX(10);
         tablero.setLayoutY(10);
         paneRoot.getChildren().add(tablero);
-        //tablero.
         
         PanelLateral panel = new PanelLateral();
         panel.setLayoutX(600);
