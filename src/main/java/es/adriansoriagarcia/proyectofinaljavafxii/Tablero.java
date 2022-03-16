@@ -13,9 +13,11 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 
@@ -46,7 +48,6 @@ public class Tablero extends GridPane {
     ImageView [][] imageOculta;
     boolean controlAcierto;
     Button ButtonInicio;
-    Button ButtonReinicio;
     int valor;
     static short intentosRestantes = 5;
     byte cuentaAtras = 4;
@@ -61,25 +62,21 @@ public class Tablero extends GridPane {
         //this.setMinHeight(Carta.TAM_CARTA * (Control.tamYTablero + 1)); 
         //this.setMaxWidth(Carta.TAM_CARTA * Control.tamXTablero);
         //this.setMaxHeight(Carta.TAM_CARTA * (Control.tamYTablero + 1)); 
+        //this.setPrefWidth(Carta.TAM_CARTA * Control.tamXTablero);
+        //this.setPrefHeight(Carta.TAM_CARTA * (Control.tamYTablero + 1)); 
         this.setAlignment(Pos.CENTER);
         control= new Control();
         //panel= new PanelLateral();
  
         
         PanelLateral.ButtonInicio = new Button("Iniciar");
-        PanelLateral.ButtonReinicio = new Button("Reiniciar");
-       
-        PanelLateral.ButtonReinicio.setVisible(false);
         //----------------------------------------------------------------------
         //array de tamaño del tablero
         imageOculta = new ImageView [Control.tamXTablero][Control.tamYTablero];
         ocultarImagenes();
         muestraImagenesInicio(control);
-        
-
+        //this.getStylesheets().add("stylesheet.css");
         //----------------------------------------------------------------------
-
-       
     } 
     /*
      * Muestra las imágenes de todo el tablero durante x segundos al iniciar.
@@ -89,6 +86,7 @@ public class Tablero extends GridPane {
             anadeImagenes();
             timelineCuentaAtras.play();
             timelineImagen.play();
+            textClick.setText(String.valueOf(intentosRestantes));
             this.setDisable(false);//Activamos el gridPane para empezar la partida
             
         });
@@ -146,6 +144,8 @@ public class Tablero extends GridPane {
     public void mouseEvent(Control control){
         this.setOnMouseClicked((event) -> {
             //System.out.println("entra en mouse event");
+            System.out.println("getx: "+event.getX());
+            System.out.println("getx: "+event.getY());
             columnaTemporal = (byte)(event.getX() / Carta.TAM_CARTA);
             filaTemporal = (byte)(event.getY() / Carta.TAM_CARTA);
             System.out.println(columnaTemporal);
@@ -265,15 +265,12 @@ public class Tablero extends GridPane {
              alert.setTitle("Fin");
              alert.setContentText("Has perdido");
              alert.showAndWait();
+             
              intentosRestantes=0;
              this.setDisable(true);//Desactivamos el gridPane para no poder realizar ninguna acción
              //textClick.setVisible(false);
-             PanelLateral.ButtonReinicio.setVisible(true);
-             PanelLateral.ButtonReinicio.setOnAction((t) -> {
-                 reinicio();
-                 //eliminarCartas();
+             reinicio();
 
-            });
         }
     }
     
@@ -297,24 +294,21 @@ public class Tablero extends GridPane {
         intentosRestantes=0;
         this.setDisable(true);//Desactivamos el gridPane para no poder realizar ninguna acción
         //textClick.setVisible(false);
-        PanelLateral.ButtonReinicio.setVisible(true);
-        PanelLateral.ButtonReinicio.setOnAction((t) -> {
-            reinicio();
-            //eliminarCartas();
-
-        });
+        reinicio();
         
     }
     
     public void reinicio(){
         control= new Control();
         //textClick.setVisible(true);
+        //System.out.println("nivel de dificultad " + PanelLateral.continuidad);
         intentosRestantes=5;
         cuentaAtras = 4;
         ocultarImagenes();
         muestraImagenesInicio(control);
-        PanelLateral.ButtonReinicio.setVisible(false);
+        PanelLateral.nivelDifi.getSelectionModel().select("Medio");
         PanelLateral.ButtonInicio.setVisible(true);
+       
         
         
     }
@@ -331,7 +325,3 @@ public class Tablero extends GridPane {
     }
 
 }
-
-//el nivel de dificultad depende de la cantidad de click disponibles
-
-

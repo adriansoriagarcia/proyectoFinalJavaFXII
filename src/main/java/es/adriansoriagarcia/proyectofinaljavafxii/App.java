@@ -1,7 +1,6 @@
 package es.adriansoriagarcia.proyectofinaljavafxii;
 
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -17,7 +16,7 @@ public class App extends Application {
     public void start(Stage stage) {
         // Panel principal que contendrá los elementos de la pantalla
         Pane paneRoot;
-        final short tamXPantalla=800;//Constante con el tamaño horizontal de la pantalla
+        final short tamXPantalla=750;//Constante con el tamaño horizontal de la pantalla
         final short tamYPantalla=580;//Constante con el tamaño vertical de la pantalla
         
         paneRoot = new Pane();
@@ -40,7 +39,8 @@ public class App extends Application {
         panel.setLayoutY(180);
         paneRoot.getChildren().add(panel);
         
-        
+        //Añadir imagen de fondo.
+        paneRoot.setStyle("-fx-background-image:url('images/background.jpg');");
         
     }
 

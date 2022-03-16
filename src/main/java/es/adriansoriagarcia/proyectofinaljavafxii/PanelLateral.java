@@ -27,19 +27,33 @@ public class PanelLateral extends VBox{
     static Text texClickRestante;//Declaración de text que contiene el texto "intentos".
     final int TEXT_SIZE = 24;//Declaración e inicialización de usada para el tamaño de letra de los text. 
     static int selectedNivel;//Indice del nivel de dificultad.
-    final ChoiceBox<String> nivelDifi;//Declaración de choicebox con los diferentes niveles de dificultad.
+    static ChoiceBox<String> nivelDifi;//Declaración de choicebox con los diferentes niveles de dificultad.
     static Button ButtonInicio;//Declaración botón de incio partida.
-    static Button ButtonReinicio;//Declaración botón de reinicio de partida.
+    
     
     public PanelLateral(){
-        this.setAlignment(Pos.CENTER_RIGHT);
+        this.setAlignment(Pos.CENTER);//Posición centrada del panel.
         //this.setSpacing(60);
         
-
+        nivelDifi = new ChoiceBox<>();
+        nivelDificultad();
+        layoutPanel();
          //----------------------------------------------------------------------
+            //BOTON INICION
+        //----------------------------------------------------------------------
+        ButtonInicio.setMaxSize(100,50);
+        this.getChildren().add(ButtonInicio);
+        //this.getStylesheets().add("/stylesheet.css");
+        this.setStyle("-fx-font: normal bold 15px 'serif' ");
+        //----------------------------------------------------------------------
+
+    }
+    
+    public void nivelDificultad(){
+        //----------------------------------------------------------------------
             //CHOICEBOX OPCIONES
         //----------------------------------------------------------------------
-        nivelDifi = new ChoiceBox<>();
+        
         nivelDifi.getSelectionModel().select("Medio");
 
         nivelDifi.getItems().add("Facil");
@@ -76,39 +90,16 @@ public class PanelLateral extends VBox{
         });
         
         this.getChildren().add(nivelDifi);
-        //this.setMargin(nivelDifi, new Insets(0, 0, 0, 60));
-        //------------------------------------------------------------------------
-        //this.add(nivelDifi, 7, 0);
-        layoutPanel();
-         
-         //----------------------------------------------------------------------
-            //BOTON INICION
-        //----------------------------------------------------------------------
-        ButtonInicio.setMaxSize(100,50);
-        this.getChildren().add(ButtonInicio);
-        
-       
-       
-        //----------------------------------------------------------------------
-        //----------------------------------------------------------------------
-            //BOTON REINICIO
-        //----------------------------------------------------------------------
-        //ButtonReinicio = new Button("Reiniciar");
-        ButtonReinicio.setMaxSize(100,50);
-        //ButtonReinicio.setVisible(true);
-        this.getChildren().add(ButtonReinicio);
-       
-               
         
     }
     
-    
     private void layoutPanel(){
+        this.setSpacing(10);//Espacio entre componentes.
         //Texto de etiqueta para tiempo
         texTitleTempo = new Text("Tiempo:");
         texTitleTempo.setFont(Font.font(TEXT_SIZE));
         texTitleTempo.setFill(Color.BLACK);
-        //Texto para la tiempo restante
+        //Texto para el tiempo restante
         textTiempo = new Text("4");
         textTiempo.setFont(Font.font(TEXT_SIZE));
         textTiempo.setFill(Color.BLACK);
@@ -120,14 +111,13 @@ public class PanelLateral extends VBox{
         texClickRestante = new Text("Intentos:");
         texClickRestante.setFont(Font.font(TEXT_SIZE));
         texClickRestante.setFill(Color.BLACK);
-        //Texto para la tiempo restante
+        //Texto para intentos restante
         textClick = new Text("5");
         textClick.setFont(Font.font(TEXT_SIZE));
         textClick.setFill(Color.BLACK);
         this.getChildren().add(texClickRestante);
         this.getChildren().add(textClick);
-
-        
+          
     }
     
 }
