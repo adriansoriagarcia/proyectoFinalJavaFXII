@@ -7,6 +7,9 @@ package es.adriansoriagarcia.proyectofinaljavafxii;
 
 import static es.adriansoriagarcia.proyectofinaljavafxii.PanelLateral.textClick;
 import static es.adriansoriagarcia.proyectofinaljavafxii.PanelLateral.textTiempo;
+
+import java.net.URISyntaxException;
+import java.net.URL;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -17,16 +20,19 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 
+
+
 /**
  *
- * @author adrián
+ * @author adriÃ¡n
  */
 
-//Recorre el array de numeros y dependiendo del valor de cada posición coloca una imagen en grindpanel
+//Recorre el array de numeros y dependiendo del valor de cada posiciÃ³n coloca una imagen en grindpanel
 public class Tablero extends GridPane {
     
     public boolean play = false;
@@ -54,9 +60,10 @@ public class Tablero extends GridPane {
     final int TEXT_SIZE = 24;
     int selectedNivel;//Indice del nivel de dificultad
     Alert AlertFin ;
+    AudioClip audioClip1;
     
     /*
-     * Método constructor de la clase Tablero.
+     * MÃ©todo constructor de la clase Tablero.
     */
     public Tablero() { 
         //this.setMinWidth(Carta.TAM_CARTA * Control.tamXTablero);
@@ -72,7 +79,7 @@ public class Tablero extends GridPane {
         
         PanelLateral.ButtonInicio = new Button("Iniciar");
         //----------------------------------------------------------------------
-        //array de tamaño del tablero
+        //array de tamaÃ±o del tablero
         imageOculta = new ImageView [Control.tamXTablero][Control.tamYTablero];
         ocultarImagenes();
         muestraImagenesInicio(control);
@@ -80,7 +87,7 @@ public class Tablero extends GridPane {
         //----------------------------------------------------------------------
     } 
     /*
-     * Muestra las imágenes de todo el tablero durante x segundos al iniciar.
+     * Muestra las imÃ¡genes de todo el tablero durante x segundos al iniciar.
     */
     private void muestraImagenesInicio(Control control){
         PanelLateral.ButtonInicio.setOnAction((t) -> {
@@ -126,7 +133,7 @@ public class Tablero extends GridPane {
 
     }
     /*
-     * Asigna la imágen que contendra cada casilla
+     * Asigna la imÃ¡gen que contendra cada casilla
     */
     public void anadeImagenes(){
         for(int x=0; x<Control.tamXTablero;x++){   
@@ -139,7 +146,7 @@ public class Tablero extends GridPane {
     }
     
     /**
-    * Asigna la posición de X e Y de las 2 cartas seleccionadas
+    * Asigna la posiciÃ³n de X e Y de las 2 cartas seleccionadas
     * @param control necesario para enviar parametros de cada click
     */
     public void mouseEvent(Control control){
@@ -165,14 +172,34 @@ public class Tablero extends GridPane {
 
                     System.out.println("colum carta 1 " + columna);
                     System.out.println("fila carta 1 " + fila);
+                    URL urlAudio = getClass().getResource("/audio/carta.mp3");
+                    if(urlAudio != null) {
+                        try {
+                            audioClip1 = new AudioClip(urlAudio.toURI().toString());
+                            audioClip1.play();
+                        } catch (URISyntaxException ex) {
+                            System.out.println("Error en el formato de ruta de archivo de audio");
+                        }            
+                    } else {
+                        System.out.println("No se ha encontrado el archivo de audio");
+                    }
+                    
                 }else if (c==2){//Segundo click
                     columna1 = columnaTemporal;
                     fila1 = filaTemporal;
                     imageOculta[columna1][fila1].setVisible(false);
 
-                    //intentosRestantes--;
-                    
-                    //finPerdida();
+                    URL urlAudio = getClass().getResource("/audio/carta.mp3");
+                    if(urlAudio != null) {
+                        try {
+                            audioClip1 = new AudioClip(urlAudio.toURI().toString());
+                            audioClip1.play();
+                        } catch (URISyntaxException ex) {
+                            System.out.println("Error en el formato de ruta de archivo de audio");
+                        }            
+                    } else {
+                        System.out.println("No se ha encontrado el archivo de audio");
+                    }
 
                     System.out.println("colum carta 2 " + columna1);
                     System.out.println(" fila carta 2 " + fila1);
@@ -180,7 +207,7 @@ public class Tablero extends GridPane {
                     //If que controla si se pulsa dos veces sobre la misma carta no cuente el segundo click.
                     if(columna==columna1 && fila==fila1) {
                         c--;
-                    }else {//Envia los cuatro parámetros de las 2 cartas seleccionadas.
+                    }else {//Envia los cuatro parÃ¡metros de las 2 cartas seleccionadas.
                         intentosRestantes--;
                         textClick.setText(String.valueOf(intentosRestantes));
                         finPerdida();
@@ -215,7 +242,7 @@ public class Tablero extends GridPane {
     }
     
     /*
-     * Oculta todas las imágenes del tablero.
+     * Oculta todas las imÃ¡genes del tablero.
     */
     private void ocultarImagenes() {
         for(int x=0; x<Control.tamXTablero;x++){   
@@ -230,15 +257,15 @@ public class Tablero extends GridPane {
     }
     
     /**
-     * Oculta las imágenes cuando no coinciden
+     * Oculta las imÃ¡genes cuando no coinciden
      */
     public void ocultarImagenesDistintas(){
 
         timelineocultaImagen = new Timeline(
             new KeyFrame(Duration.seconds(1.000), (ActionEvent t) -> {
-                imageOculta[columna][fila].setVisible(true);//Oculta la imágen levantada
-                imageOculta[columna1][fila1].setVisible(true);//Oculta la imágen levantada
-                c=0;//Contador de clic en 0 una vez ocultada las imagenes para no mostrar mas de 2 imágenes 
+                imageOculta[columna][fila].setVisible(true);//Oculta la imÃ¡gen levantada
+                imageOculta[columna1][fila1].setVisible(true);//Oculta la imÃ¡gen levantada
+                c=0;//Contador de clic en 0 una vez ocultada las imagenes para no mostrar mas de 2 imÃ¡genes 
  
         })
         );
@@ -276,7 +303,7 @@ public class Tablero extends GridPane {
             AlertFin.showAndWait();
              
             intentosRestantes=0;
-            this.setDisable(true);//Desactivamos el gridPane para no poder realizar ninguna acción
+            this.setDisable(true);//Desactivamos el gridPane para no poder realizar ninguna acciÃ³n
             //textClick.setVisible(false);
             reinicio();
 
@@ -308,7 +335,7 @@ public class Tablero extends GridPane {
         AlertFin.setContentText("Has Ganado.");
         AlertFin.showAndWait();
         intentosRestantes=0;
-        this.setDisable(true);//Desactivamos el gridPane para no poder realizar ninguna acción
+        this.setDisable(true);//Desactivamos el gridPane para no poder realizar ninguna acciÃ³n
         //textClick.setVisible(false);
         reinicio();
         

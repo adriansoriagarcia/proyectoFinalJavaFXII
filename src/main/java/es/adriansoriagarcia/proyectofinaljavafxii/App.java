@@ -32,6 +32,8 @@ public class App extends Application {
         //Añadir imagen de fondo.
         paneRoot.setStyle("-fx-background-image:url('images/background.jpg');");
         
+        
+        
     }
 
     public static void main(String[] args) {
