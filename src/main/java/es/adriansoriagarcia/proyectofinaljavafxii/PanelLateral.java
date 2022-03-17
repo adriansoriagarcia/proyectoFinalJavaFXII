@@ -44,7 +44,8 @@ public class PanelLateral extends VBox{
         ButtonInicio.setMaxSize(100,50);
         this.getChildren().add(ButtonInicio);
         //this.getStylesheets().add("/stylesheet.css");
-        this.setStyle("-fx-font: normal bold 15px 'serif' ");
+        this.setId("panel");
+        //this.setStyle("-fx-font: normal bold 15px 'serif' ");
         //----------------------------------------------------------------------
 
     }

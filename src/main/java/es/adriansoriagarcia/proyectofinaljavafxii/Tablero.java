@@ -13,11 +13,11 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.stage.StageStyle;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 
@@ -53,6 +53,7 @@ public class Tablero extends GridPane {
     byte cuentaAtras = 4;
     final int TEXT_SIZE = 24;
     int selectedNivel;//Indice del nivel de dificultad
+    Alert AlertFin ;
     
     /*
      * Método constructor de la clase Tablero.
@@ -87,6 +88,8 @@ public class Tablero extends GridPane {
             timelineCuentaAtras.play();
             timelineImagen.play();
             textClick.setText(String.valueOf(intentosRestantes));
+            PanelLateral.nivelDifi.setDisable(true);
+            PanelLateral.ButtonInicio.setDisable(true);
             this.setDisable(false);//Activamos el gridPane para empezar la partida
             
         });
@@ -114,9 +117,7 @@ public class Tablero extends GridPane {
             new KeyFrame(Duration.seconds(4.000), (ActionEvent t) -> {
                ocultarImagenes(); 
                mouseEvent(control); 
-               //myButton.setCancelButton(false);
-               PanelLateral.ButtonInicio.setVisible(false);
-               
+               //myButton.setCancelButton(false);   
         })
         );
         timelineImagen.setCycleCount(1);
@@ -260,16 +261,27 @@ public class Tablero extends GridPane {
             //System.out.println("fin partida perdida");
             
             //ocultarImagenesDistintas();
-             Alert alert = new Alert(Alert.AlertType.INFORMATION);
+             /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
              alert.setHeaderText(null);
              alert.setTitle("Fin");
              alert.setContentText("Has perdido");
-             alert.showAndWait();
+             alert.showAndWait();*/
              
-             intentosRestantes=0;
-             this.setDisable(true);//Desactivamos el gridPane para no poder realizar ninguna acción
-             //textClick.setVisible(false);
-             reinicio();
+            AlertFin = new Alert(Alert.AlertType.INFORMATION);
+            DialogPane dialogPane = AlertFin.getDialogPane();
+            //dialogPane.setStyle("-fx-font: normal bold 15px 'serif'");
+            dialogPane.getStylesheets().add("css/myDialogs.css");
+            dialogPane.setId("dialogo");
+            dialogPane.getScene().setFill(Color.TRANSPARENT);
+            AlertFin.setHeaderText(null);
+            AlertFin.setTitle("Fín Partida");
+            AlertFin.setContentText("Has perdido.");
+            AlertFin.showAndWait();
+             
+            intentosRestantes=0;
+            this.setDisable(true);//Desactivamos el gridPane para no poder realizar ninguna acción
+            //textClick.setVisible(false);
+            reinicio();
 
         }
     }
@@ -286,11 +298,21 @@ public class Tablero extends GridPane {
         timelineEsperaFin.play();
         
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
         alert.setTitle("Fin");
         alert.setContentText("Lo has conseguido");
-        alert.showAndWait();
+        alert.showAndWait();*/
+        
+        AlertFin = new Alert(Alert.AlertType.INFORMATION);
+        DialogPane dialogPane = AlertFin.getDialogPane();
+        //dialogPane.setStyle("-fx-font: normal bold 15px 'serif',-fx-border-radius: 0 0 18 18 ");
+        dialogPane.getStylesheets().add("css/myDialogs.css");
+        dialogPane.setId("dialogo");
+        AlertFin.setHeaderText(null);
+        AlertFin.setTitle("Fín Partida");
+        AlertFin.setContentText("Has Ganado.");
+        AlertFin.showAndWait();
         intentosRestantes=0;
         this.setDisable(true);//Desactivamos el gridPane para no poder realizar ninguna acción
         //textClick.setVisible(false);
@@ -306,8 +328,9 @@ public class Tablero extends GridPane {
         cuentaAtras = 4;
         ocultarImagenes();
         muestraImagenesInicio(control);
+        PanelLateral.nivelDifi.setDisable(false);
         PanelLateral.nivelDifi.getSelectionModel().select("Medio");
-        PanelLateral.ButtonInicio.setVisible(true);
+        PanelLateral.ButtonInicio.setDisable(false);
        
         
         
