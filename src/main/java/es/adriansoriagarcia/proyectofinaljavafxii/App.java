@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 
 /**
  * JavaFX App
- * https://www.memo-juegos.com/pdf/memorama_para_imprimir_mario_kart.pdf
  */
 public class App extends Application {
 
@@ -27,17 +26,8 @@ public class App extends Application {
         stage.setTitle("Memoria");
         stage.setResizable(false);
         
-        //TAMAÑOS TABLERO(4X4|6X6)
-        //(short)6,(short)6
-        Tablero tablero = new Tablero();
-        tablero.setLayoutX(10);
-        tablero.setLayoutY(10);
-        paneRoot.getChildren().add(tablero);
-        
-        PanelLateral panel = new PanelLateral();
-        panel.setLayoutX(600);
-        panel.setLayoutY(180);
-        paneRoot.getChildren().add(panel);
+        MenuPrincipal menu = new MenuPrincipal();
+        paneRoot.getChildren().add(menu);
         
         //Añadir imagen de fondo.
         paneRoot.setStyle("-fx-background-image:url('images/background.jpg');");

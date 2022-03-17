@@ -50,7 +50,7 @@ public class PanelLateral extends VBox{
 
     }
     
-    public void nivelDificultad(){
+    private void nivelDificultad(){
         //----------------------------------------------------------------------
             //CHOICEBOX OPCIONES
         //----------------------------------------------------------------------

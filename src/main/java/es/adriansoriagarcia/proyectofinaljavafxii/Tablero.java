@@ -246,6 +246,9 @@ public class Tablero extends GridPane {
         timelineocultaImagen.play();
     }
     
+    /**
+     * Muestra un alert cuando los intentos llegan a 0
+     */
     public void finPerdida(){
         
         if (intentosRestantes==0){
@@ -259,22 +262,16 @@ public class Tablero extends GridPane {
             timelineEsperaFin.setCycleCount(1);
             timelineEsperaFin.play();
             //System.out.println("fin partida perdida");
-            
-            //ocultarImagenesDistintas();
-             /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
-             alert.setHeaderText(null);
-             alert.setTitle("Fin");
-             alert.setContentText("Has perdido");
-             alert.showAndWait();*/
              
             AlertFin = new Alert(Alert.AlertType.INFORMATION);
             DialogPane dialogPane = AlertFin.getDialogPane();
             //dialogPane.setStyle("-fx-font: normal bold 15px 'serif'");
+            AlertFin.getDialogPane().setGraphic(new ImageView("/images/fallo.PNG"));
             dialogPane.getStylesheets().add("css/myDialogs.css");
             dialogPane.setId("dialogo");
             dialogPane.getScene().setFill(Color.TRANSPARENT);
             AlertFin.setHeaderText(null);
-            AlertFin.setTitle("Fín Partida");
+            AlertFin.setTitle("Fin Partida");
             AlertFin.setContentText("Has perdido.");
             AlertFin.showAndWait();
              
@@ -286,6 +283,9 @@ public class Tablero extends GridPane {
         }
     }
     
+    /**
+     * Muestra un alert cuando consigue emparejar todas las cartas.
+     */
     public void finGanada(){
         System.out.println("fin partida ganada");
         timelineEsperaFin = new Timeline(
@@ -297,20 +297,14 @@ public class Tablero extends GridPane {
         timelineEsperaFin.setCycleCount(1);
         timelineEsperaFin.play();
         
-
-        /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setTitle("Fin");
-        alert.setContentText("Lo has conseguido");
-        alert.showAndWait();*/
-        
         AlertFin = new Alert(Alert.AlertType.INFORMATION);
         DialogPane dialogPane = AlertFin.getDialogPane();
         //dialogPane.setStyle("-fx-font: normal bold 15px 'serif',-fx-border-radius: 0 0 18 18 ");
+        AlertFin.getDialogPane().setGraphic(new ImageView("/images/superar.PNG"));
         dialogPane.getStylesheets().add("css/myDialogs.css");
         dialogPane.setId("dialogo");
         AlertFin.setHeaderText(null);
-        AlertFin.setTitle("Fín Partida");
+        AlertFin.setTitle("Fin Partida");
         AlertFin.setContentText("Has Ganado.");
         AlertFin.showAndWait();
         intentosRestantes=0;
@@ -320,6 +314,9 @@ public class Tablero extends GridPane {
         
     }
     
+    /**
+     * llama a la clase control para crear un nuevo array y reiniciar todas las variables necesarias.
+     */
     public void reinicio(){
         control= new Control();
         //textClick.setVisible(true);

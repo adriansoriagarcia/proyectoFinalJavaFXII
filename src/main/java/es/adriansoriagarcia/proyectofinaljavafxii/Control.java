@@ -24,9 +24,7 @@ public class Control {
     int aleatorioFilas1;//Variable
     int aleatorioColumnas1;//Variable
     boolean finPartida = false;
-    char turnoJugador = JUGADOR1;
-    static final char JUGADOR1 = '1';
-    static final char JUGADOR2 = '2';
+
 
     //Método constructor
     public Control(){
@@ -140,13 +138,6 @@ public class Control {
        return false;
     }  
     
-    public void cambiarTurnoJugador() {
-        if(turnoJugador == JUGADOR1) {
-            turnoJugador = JUGADOR2;
-        } else {
-            turnoJugador = JUGADOR1;
-        }
-    }
     
     public boolean finPartida() {
         for(int x=0; x<tamXTablero; x++) {
