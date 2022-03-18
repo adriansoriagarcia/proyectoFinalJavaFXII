@@ -3,6 +3,8 @@
 
 }
 
-#dialogo{
+#dialogo,#soundON,#soundOFF{
 	-fx-background-color:white;
 }
+
+

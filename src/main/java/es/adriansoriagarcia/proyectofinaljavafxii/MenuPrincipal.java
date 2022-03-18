@@ -63,7 +63,7 @@ public class MenuPrincipal extends Pane{
         
         PanelLateral panel = new PanelLateral();
         panel.setLayoutX(600);
-        panel.setLayoutY(180);
+        panel.setLayoutY(140);
         this.getChildren().add(panel);
     }
     

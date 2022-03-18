@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -29,16 +30,26 @@ public class PanelLateral extends VBox{
     static int selectedNivel;//Indice del nivel de dificultad.
     static ChoiceBox<String> nivelDifi;//Declaración de choicebox con los diferentes niveles de dificultad.
     static Button ButtonInicio;//Declaración botón de incio partida.
+    static Button btnStart;
+    static Button btnPause;
     
     
     public PanelLateral(){
         this.setAlignment(Pos.CENTER);//Posición centrada del panel.
-        //this.setSpacing(60);
+        //----------------------------------------------------------------------
+            //BOTONES SONIDO
+        //----------------------------------------------------------------------
         
+        btnStart.setId("soundON");
+        btnPause.setId("soundOFF");
+        btnStart.setGraphic(new ImageView("/images/sound.PNG"));
+        btnPause.setGraphic(new ImageView("/images/mute.PNG"));
+        this.getChildren().addAll(btnStart,btnPause);
+        //----------------------------------------------------------------------
         nivelDifi = new ChoiceBox<>();
         nivelDificultad();
         layoutPanel();
-         //----------------------------------------------------------------------
+        //----------------------------------------------------------------------
             //BOTON INICION
         //----------------------------------------------------------------------
         ButtonInicio.setMaxSize(100,50);

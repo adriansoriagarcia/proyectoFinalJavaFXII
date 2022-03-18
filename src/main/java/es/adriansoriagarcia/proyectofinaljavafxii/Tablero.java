@@ -61,6 +61,7 @@ public class Tablero extends GridPane {
     int selectedNivel;//Indice del nivel de dificultad
     Alert AlertFin ;
     AudioClip audioClip1;
+    URL urlAudio;
     
     /*
      * MÃ©todo constructor de la clase Tablero.
@@ -78,13 +79,23 @@ public class Tablero extends GridPane {
  
         
         PanelLateral.ButtonInicio = new Button("Iniciar");
+        PanelLateral.btnStart=new Button("");
+        PanelLateral.btnPause = new Button("");
         //----------------------------------------------------------------------
         //array de tamaÃ±o del tablero
         imageOculta = new ImageView [Control.tamXTablero][Control.tamYTablero];
         ocultarImagenes();
         muestraImagenesInicio(control);
         //this.getStylesheets().add("stylesheet.css");
-        //----------------------------------------------------------------------
+        //urlAudio = getClass().getResource("/audio/carta.mp3");
+        
+        PanelLateral.btnStart.setOnAction((t) -> {
+            urlAudio = getClass().getResource("/audio/carta.mp3");
+        });
+        PanelLateral.btnPause.setOnAction((t) -> {
+            urlAudio = getClass().getResource("/audio/silencio.mp3");
+        });
+        
     } 
     /*
      * Muestra las imÃ¡genes de todo el tablero durante x segundos al iniciar.
@@ -98,6 +109,7 @@ public class Tablero extends GridPane {
             PanelLateral.nivelDifi.setDisable(true);
             PanelLateral.ButtonInicio.setDisable(true);
             this.setDisable(false);//Activamos el gridPane para empezar la partida
+            
             
         });
         
@@ -153,7 +165,7 @@ public class Tablero extends GridPane {
         this.setOnMouseClicked((event) -> {
             //System.out.println("entra en mouse event");
             System.out.println("getx: "+event.getX());
-            System.out.println("getx: "+event.getY());
+            System.out.println("gety: "+event.getY());
             columnaTemporal = (byte)(event.getX() / Carta.TAM_CARTA);
             filaTemporal = (byte)(event.getY() / Carta.TAM_CARTA);
             System.out.println(columnaTemporal);
@@ -172,7 +184,7 @@ public class Tablero extends GridPane {
 
                     System.out.println("colum carta 1 " + columna);
                     System.out.println("fila carta 1 " + fila);
-                    URL urlAudio = getClass().getResource("/audio/carta.mp3");
+                    
                     if(urlAudio != null) {
                         try {
                             audioClip1 = new AudioClip(urlAudio.toURI().toString());
@@ -189,7 +201,6 @@ public class Tablero extends GridPane {
                     fila1 = filaTemporal;
                     imageOculta[columna1][fila1].setVisible(false);
 
-                    URL urlAudio = getClass().getResource("/audio/carta.mp3");
                     if(urlAudio != null) {
                         try {
                             audioClip1 = new AudioClip(urlAudio.toURI().toString());
