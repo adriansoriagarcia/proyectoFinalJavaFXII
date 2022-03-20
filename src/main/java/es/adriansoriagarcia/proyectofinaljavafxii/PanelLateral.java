@@ -30,18 +30,18 @@ public class PanelLateral extends VBox{
     static int selectedNivel;//Indice del nivel de dificultad.
     static ChoiceBox<String> nivelDifi;//Declaración de choicebox con los diferentes niveles de dificultad.
     static Button ButtonInicio;//Declaración botón de incio partida.
-    static Button btnStart;
-    static Button btnPause;
+    static Button btnStart;//Declaración botón de activar sonido.
+    static Button btnPause;//Declaración botón de desactivar sonido.
     
-    
+    /*
+     * Metodo constructor de la clase PanleLateral.
+    */
     public PanelLateral(){
         this.setAlignment(Pos.CENTER);//Posición centrada del panel.
         //----------------------------------------------------------------------
             //BOTONES SONIDO
         //----------------------------------------------------------------------
         
-        btnStart.setId("soundON");
-        btnPause.setId("soundOFF");
         btnStart.setGraphic(new ImageView("/images/sound.PNG"));
         btnPause.setGraphic(new ImageView("/images/mute.PNG"));
         this.getChildren().addAll(btnStart,btnPause);
@@ -61,6 +61,9 @@ public class PanelLateral extends VBox{
 
     }
     
+    /*
+     * seleccion del nivel de dificultar deseado..
+    */
     private void nivelDificultad(){
         //----------------------------------------------------------------------
             //CHOICEBOX OPCIONES
@@ -71,10 +74,6 @@ public class PanelLateral extends VBox{
         nivelDifi.getItems().add("Facil");
         nivelDifi.getItems().add("Medio");
         nivelDifi.getItems().add("Dificil");
-
-        /*nivelDifi.getSelectionModel()
-            .selectedItemProperty()
-            .addListener( (ObservableValue<? extends String> observable, String oldValue, String newValue) -> System.out.println(newValue) );*/
         
         nivelDifi.setOnAction((evento) -> {
         selectedNivel = nivelDifi.getSelectionModel().getSelectedIndex();
@@ -88,12 +87,12 @@ public class PanelLateral extends VBox{
                     break;
                 case 1:
                     System.out.println("nivel medio");
-                    Tablero.intentosRestantes=5;
+                    Tablero.intentosRestantes=15;
                     textClick.setText(String.valueOf(Tablero.intentosRestantes));
                     break;
                 case 2:
                     System.out.println("nivel dificil");
-                    Tablero.intentosRestantes=3;
+                    Tablero.intentosRestantes=10;
                     textClick.setText(String.valueOf(Tablero.intentosRestantes));
                     break;
                 default:
@@ -105,6 +104,9 @@ public class PanelLateral extends VBox{
         
     }
     
+    /*
+     * Muestra los intentos restantes y el tiempo de la cuenta atras.
+    */
     private void layoutPanel(){
         this.setSpacing(10);//Espacio entre componentes.
         //Texto de etiqueta para tiempo
@@ -119,12 +121,12 @@ public class PanelLateral extends VBox{
         this.getChildren().add(textTiempo);
 
         //-------------------------------------------------
-        //Texto de etiqueta para tiempo
+        //Texto de etiqueta para intentos
         texClickRestante = new Text("Intentos:");
         texClickRestante.setFont(Font.font(TEXT_SIZE));
         texClickRestante.setFill(Color.BLACK);
         //Texto para intentos restante
-        textClick = new Text("5");
+        textClick = new Text("15");
         textClick.setFont(Font.font(TEXT_SIZE));
         textClick.setFill(Color.BLACK);
         this.getChildren().add(texClickRestante);

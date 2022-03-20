@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 
 public class Carta extends ImageView {
 
-    static final int TAM_CARTA=140;
+    static final int TAM_CARTA=140;//constante para el tamaño de la carta.
     //Método constructor Casilla
     /**
     * Selecciona la imágen dependiendo del numcarta correspondiente

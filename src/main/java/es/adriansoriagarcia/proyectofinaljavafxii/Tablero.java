@@ -5,8 +5,6 @@
  */
 package es.adriansoriagarcia.proyectofinaljavafxii;
 
-import static es.adriansoriagarcia.proyectofinaljavafxii.PanelLateral.textClick;
-import static es.adriansoriagarcia.proyectofinaljavafxii.PanelLateral.textTiempo;
 
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -35,33 +33,33 @@ import javafx.util.Duration;
 //Recorre el array de numeros y dependiendo del valor de cada posiciÃ³n coloca una imagen en grindpanel
 public class Tablero extends GridPane {
     
-    public boolean play = false;
-    byte c=0;
-    byte columna;
-    byte fila;
-    byte columnaTemporal;
-    byte filaTemporal;
-    byte columna1;
-    byte fila1;
-    Control control;
-    Carta carta;
-    Timeline timelineocultaImagen;
-    Timeline timelineImagen;
-    Timeline timelineCuentaAtras;
-    Timeline timelineEsperaFin;
-    Image cartaBackground;
-    ImageView imgView;
-    ImageView [][] imageOculta;
-    boolean controlAcierto;
-    Button ButtonInicio;
-    int valor;
-    static short intentosRestantes = 5;
-    byte cuentaAtras = 4;
-    final int TEXT_SIZE = 24;
+    //public boolean play = false;
+    byte c=0;//Declaración variable c utilizada en el recuento de click.
+    byte columnaTemporal;//Declaración de variable que es la columna de la carta seleccionada.
+    byte filaTemporal;//Declaración de variable que es la fila de la carta seleccionada.
+    byte columna;//Declaración de variable que es la columna de la primera carta seleccionada.
+    byte fila;//Declaración de variable que es la fila de la primera carta seleccionada.
+    byte columna1;//Declaración de variable que es la columna de la segunda carta seleccionada.
+    byte fila1;//Declaración de variable que es la fila de la segunda carta seleccionada.
+    Control control;//Declaración de llamada a clase Control.
+    Carta carta;//Declaración de llamada a clase Carta.
+    Timeline timelineocultaImagen;//Declaración Timeline para la espera de ocultar imágenes. 
+    Timeline timelineImagen;//Declaración Timeline con x segundos para empezar partida.
+    Timeline timelineCuentaAtras;//Declaración Timeline para la cuenta atras.
+    Timeline timelineEsperaFin;//Declaración Timeline para la espera cuando finaliza la partida.
+    Image cartaBackground;//Declaración Image que es la imágen verde que cubre las cartas.
+    ImageView imgView;//Declaración de ImageView.
+    ImageView [][] imageOculta;//Declaración array de ImageView.
+    boolean controlAcierto;//Declaración variable boolean para el control de aciertos.
+    Button ButtonInicio;//Declaración de boton de inicio.
+    //int valor;//Declaración
+    static short intentosRestantes = 15;//Declaración e inicialización de variable de los intentos restantes.
+    byte cuentaAtras = 4;//Declaración e inicialización de variable para la cuenta atras.
+    //final int TEXT_SIZE = 24;//Declaración e inicialización de variable
     int selectedNivel;//Indice del nivel de dificultad
-    Alert AlertFin ;
-    AudioClip audioClip1;
-    URL urlAudio;
+    Alert AlertFin ;//Declaración de alert para el fin de partida.
+    AudioClip audioClip1;//Declaración de aucio para el sonido de las cartas.
+    URL urlAudio;//Declaración de url para el audio de las cartas.
     
     /*
      * MÃ©todo constructor de la clase Tablero.
@@ -105,7 +103,8 @@ public class Tablero extends GridPane {
             anadeImagenes();
             timelineCuentaAtras.play();
             timelineImagen.play();
-            textClick.setText(String.valueOf(intentosRestantes));
+            //muestra los intentos restantes.
+            PanelLateral.textClick.setText(String.valueOf(intentosRestantes));
             PanelLateral.nivelDifi.setDisable(true);
             PanelLateral.ButtonInicio.setDisable(true);
             this.setDisable(false);//Activamos el gridPane para empezar la partida
@@ -117,8 +116,8 @@ public class Tablero extends GridPane {
         timelineCuentaAtras = new Timeline(
             new KeyFrame(Duration.seconds(0.990), (ActionEvent t) -> {
             cuentaAtras--; 
+            //muestra la cuenta atras.
             PanelLateral.textTiempo.setText(String.valueOf(cuentaAtras));
-            textTiempo.setText(String.valueOf(cuentaAtras));
             if (cuentaAtras==0){
                timelineCuentaAtras.stop();
             }
@@ -219,8 +218,8 @@ public class Tablero extends GridPane {
                     if(columna==columna1 && fila==fila1) {
                         c--;
                     }else {//Envia los cuatro parÃ¡metros de las 2 cartas seleccionadas.
-                        intentosRestantes--;
-                        textClick.setText(String.valueOf(intentosRestantes));
+                        intentosRestantes--;//resta un intento en el segundo click.
+                        PanelLateral.textClick.setText(String.valueOf(intentosRestantes));
                         finPerdida();
                         control.buscarPareja(columna,fila,columna1,fila1);
                         controlAcierto = control.buscarPareja(columna,fila,columna1,fila1);
@@ -228,6 +227,7 @@ public class Tablero extends GridPane {
                         boolean fin = control.finPartida();
                         if(fin==true) {
                             finGanada();
+                            
                         }
                         System.out.println("fin partida " +fin);
                     }
@@ -359,7 +359,7 @@ public class Tablero extends GridPane {
         control= new Control();
         //textClick.setVisible(true);
         //System.out.println("nivel de dificultad " + PanelLateral.continuidad);
-        intentosRestantes=5;
+        intentosRestantes=15;
         cuentaAtras = 4;
         ocultarImagenes();
         muestraImagenesInicio(control);

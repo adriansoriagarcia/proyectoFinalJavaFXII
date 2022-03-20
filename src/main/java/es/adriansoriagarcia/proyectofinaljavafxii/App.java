@@ -24,9 +24,11 @@ public class App extends Application {
         stage.setScene(scene);
         stage.show();
         stage.setTitle("Memoria");
+        //Evitar cambiar tamaño de ventana
         stage.setResizable(false);
         
         MenuPrincipal menu = new MenuPrincipal();
+        //Añadir el menu al paneRoot.
         paneRoot.getChildren().add(menu);
         
         //Añadir imagen de fondo.

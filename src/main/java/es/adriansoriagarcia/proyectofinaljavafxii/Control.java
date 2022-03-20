@@ -12,21 +12,23 @@ import java.util.Random;
  * @author adrián
  */
 public class Control {
-    static short tamXTablero; //Declaración variable tamaño X tablero
-    static short tamYTablero; //Declaración variable tamaño Y tablero          
-    static int [][] tablero; //Declaración array tablero
-    static char [][] encontrado;//Declaración array encontrado
-    final char VACIO= 0;
-    static final char SIPAREJA= 'S';
-    static final char NOPAREJA= 'N';
-    int aleatorioFilas;//Variable
-    int aleatorioColumnas;//Variable
-    int aleatorioFilas1;//Variable
-    int aleatorioColumnas1;//Variable
-    boolean finPartida = false;
+    static short tamXTablero; //Declaración variable tamaño X tablero.
+    static short tamYTablero; //Declaración variable tamaño Y tablero  .        
+    static int [][] tablero; //Declaración array tablero.
+    static char [][] encontrado;//Declaración array encontrado.
+    final char VACIO= 0;//Declaración e inicialización de variable utilizada para que siga añadiendo numeros mientras exista el 0.
+    static final char SIPAREJA= 'S';//Declaración e inicialización de variable cuando se encuentra pareja.
+    static final char NOPAREJA= 'N';//Declaración e inicialización de variable cuando no se encuentra pareja.
+    int aleatorioFilas;//Variable para el aleatorio de filas.
+    int aleatorioColumnas;//Variable para el aleatorio de columnas.
+    int aleatorioFilas1;//Variable para el aleatorio de filas.
+    int aleatorioColumnas1;//Variable para el aleatorio de columnas.
+    boolean finPartida = false;//Variable booleana para el fin de partida.
 
 
-    //Método constructor
+    /*
+     * Método constructor de la clase Control.
+    */
     public Control(){
         tamXTablero = 4;
         tamYTablero = 4;
